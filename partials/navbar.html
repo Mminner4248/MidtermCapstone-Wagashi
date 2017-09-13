@@ -12,7 +12,7 @@
                     <div class="row" id="topbarsearch">
                       <div class="input-field col s20">
                          <i class="material-icons prefix">search</i>
-                         <input type="text" ng-model="search" ng-model-options="{ debounce: 800 }" placeholder="English or Japanese" id="autocomplete-input" class="autocomplete">
+                         <input type="text" ng-keyup="search($event)" placeholder="English or Japanese">
                       </div>
                     </div>
                   </div>
@@ -21,6 +21,7 @@
           </ul>
           <ul class="right hide-on-med-and-down">
           <li><a ng-show="isLoggedIn" href="#!/home"><i class="material-icons">home</i></a></li>
+          <li><a ng-href="#!" ng-show="!isLoggedIn" ng-click="loginGoogle()">Login</a></li>
           <li><a ng-href="#!" ng-show="isLoggedIn" ng-click="logout()">Logout</a></li>
           </ul>
       </div>

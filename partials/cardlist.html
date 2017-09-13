@@ -1,0 +1,22 @@
+<div class="row">
+    <div ng-repeat="stuff in APIService.results">
+  <div class="col s12 m7">
+    <div class="card horizontal hoverable">
+      <div class="card-stacked">
+        <div class="card-content">
+            <p>{{stuff.japanese}}</p>
+          <h2>{{stuff.furigana}}</h2>
+        </div>
+        <div class="right-align">
+            <p>{{stuff.pos}}</p>
+            <!--<ul>
+                <li>1. {{stuff[0].senses[0].english_definitions}}</li>
+                <li>2. {{stuff[0].senses[1].english_definitions}}</li>
+                <li>3. {{stuff[0].senses[2].english_definitions}}</li>
+            </ul>-->
+            <a class="btn-floating btn-large waves-effect waves-light green"><i class="material-icons">add</i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

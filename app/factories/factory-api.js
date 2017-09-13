@@ -1,25 +1,42 @@
 "use strict";
 
-app.factory("APIFactory", function($scope, $q, $http){
+app.service("APIService", function($http, $q){
+    this.results = [];
 
-    const getAllDefs = function(){
-        let results = [];
-    return $q((resolve, reject) => {
-        $http.get("http://jisho.org/api/v1/search/words?keyword=" + $scope.search)
-        .then((itemObject) => {
-            let itemCollection = itemObject.data;
-            console.log("itemCollection", itemCollection);
-            Object.keys(itemCollection).forEach((key) =>{
-                itemCollection[key].id = key;
-                results.push(itemCollection[key]);
-            });
-            resolve(results);
-        })
-        .catch((error) => {
-            reject(error);
+    this.filterSearch = function(itemCollection){
+        console.log("itemCollection in filter", itemCollection.data); 
+       
+        this.results = itemCollection.data.map(function(def) {
+            //  console.log("itemCollectionEnglish", def.senses[0].english_definitions);
+            //  let varDef = [];
+            //   def.senses.english_definitions.forEach(function(key){
+            //     varDef = def.senses[key].english_definitions;
+            // });
+
+            // console.log("varDef", varDef);
+
+            return {
+                japanese: def.japanese[0].reading,
+                furigana: def.japanese[0].word,
+                pos: def.senses[0].parts_of_speech[0]
+                // definitions: varDef
+            };
+            
         });
-    });
-};
+    };
 
-return {getAllDefs};
+    this.getAllDefs = function(word){
+        return $q((resolve, reject) => {
+            $http.get("http://jisho.org/api/v1/search/words?keyword=" + word)
+                .then((itemObject) => {
+                    var itemCollection = itemObject.data;
+                    console.log("itemCollection", itemCollection);
+                    this.filterSearch(itemCollection);
+                    resolve();
+                })
+                .catch((error) => {
+                    reject(error);
+                });
+            });
+    };
 });
