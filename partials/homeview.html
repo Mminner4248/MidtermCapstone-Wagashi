@@ -1,0 +1,25 @@
+<div class="row">
+    <div ng-repeat="stuff in userCards">
+    <div class="col s12 m7">
+      <div class="card horizontal hoverable">
+        <div class="card-image">
+          <p>{{stuff.furigana}}</p>
+          <h2>{{stuff.japanese}}</h2>
+        </div>
+        <div class="card-stacked">
+          <div class="card-content gray-text center-align">
+            <p>{{stuff.pos}}</p>
+            <ul>
+                <li ng-repeat="definition in stuff.definitions">
+                  {{definition}}
+                </li>
+            </ul>
+          </div>
+          <div class="card-action right-align">
+            <a ng-click="deleteCard(stuff.id)" onclick="Materialize.toast('Vocab deleted!', 3000, 'red')" class="btn-floating btn-small waves-effect waves-light red"><i class="material-icons">remove_circle</i></a>
+        </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    </div>

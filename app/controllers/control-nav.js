@@ -5,11 +5,7 @@
 app.controller('navCtrl', function($scope, $window, APIService, userFactory, $location){
 
     $scope.sendSearch = function(word){
-        APIService.getAllDefs(word)
-		.then((data) => {
-			console.log("search");
-			$location.path = '/search';
-		});
+        APIService.getAllDefs(word);
     };
 
     $scope.search = function($event){
@@ -57,7 +53,7 @@ $scope.loginGoogle = () => {
 	userFactory.authWithProvider()
 	.then((result) => {
 		let user = result.user.uid;
-		$location.path('/home');
+		// $location.path("#!/");
 		$scope.$apply();
 	}).catch((error) => {
 		console.log("Google Login if F'd");

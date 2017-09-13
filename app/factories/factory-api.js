@@ -7,19 +7,12 @@ app.service("APIService", function($http, $q){
         console.log("itemCollection in filter", itemCollection.data); 
        
         this.results = itemCollection.data.map(function(def) {
-            //  console.log("itemCollectionEnglish", def.senses[0].english_definitions);
-            //  let varDef = [];
-            //   def.senses.english_definitions.forEach(function(key){
-            //     varDef = def.senses[key].english_definitions;
-            // });
-
-            // console.log("varDef", varDef);
 
             return {
-                japanese: def.japanese[0].reading,
-                furigana: def.japanese[0].word,
-                pos: def.senses[0].parts_of_speech[0]
-                // definitions: varDef
+                japanese: def.japanese[0].word,
+                furigana: def.japanese[0].reading,
+                pos: def.senses[0].parts_of_speech[0],
+                definitions: def.senses[0].english_definitions
             };
             
         });

@@ -22,13 +22,19 @@ app.config(($routeProvider) => {
     $routeProvider
     .when('/', {
         templateUrl:'partials/cardlist.html',
-        controller:'cardListCtrl'
-    });
+		controller:'cardListCtrl'
+	})
+	.when('/home',{
+		templateUrl: 'partials/homeview.html',
+		controller: 'homeViewCtrl',
+		resolve: {isAuth}
+	})
+	.when('/search', {
+        templateUrl:'partials/cardlist.html',
+		controller:'cardListCtrl',
+		resolve: {isAuth}
+	});
 });
-
-
-
-
 
 
 app.run(($location, FBCreds) => {
