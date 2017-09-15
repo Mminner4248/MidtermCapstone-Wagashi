@@ -33,6 +33,11 @@ app.config(($routeProvider) => {
         templateUrl:'partials/cardlist.html',
 		controller:'cardListCtrl',
 		resolve: {isAuth}
+	})
+	.when('/game', {
+        templateUrl:'partials/game.html',
+		controller:'gameCtrl',
+		resolve: {isAuth}
 	});
 });
 

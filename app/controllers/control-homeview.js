@@ -11,7 +11,7 @@ app.controller('homeViewCtrl', function($scope, homeFactory, userFactory){
             if(user) {
                 $scope.isLoggedIn = true;
                 console.log("CurrenUser logged in", user);
-                console.log("logged into firebase", $scope.isLoggedIn());
+                console.log("logged into firebase", $scope.isLoggedIn);
                 $scope.$apply();
             }else{
                 $scope.isLoggedIn = false;

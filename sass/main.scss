@@ -1,0 +1,25 @@
+.container {
+    width: 1080px;
+    margin: 0 auto;
+}
+
+.gameCard {
+    float: left;
+    margin: 10px;
+    height: 200px;
+    width: 150px;
+    background: rgb(23, 103, 23);
+    border-radius: 5px;
+    box-shadow: 10px 10px 10px #ccc;
+    text-align: center;
+    overflow: auto;
+}
+
+.gameCard:hover {
+    cursor: pointer;
+    border: 3px solid tomato;
+}
+.gameCard p {
+    font-size: 24px;
+
+}

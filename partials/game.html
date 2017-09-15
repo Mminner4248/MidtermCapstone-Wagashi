@@ -1,0 +1,8 @@
+<div class="container">
+    <div ng-click="showDetails = ! showDetails; checkMatch($event)" class="gameCard unmatched"  dataValue={{item.key}} ng-repeat="item in gameArray" >
+        <div ng-show="showDetails">
+            <p>{{item.furigana}}</p>
+            <h3>{{item.gameCard}}</h3>
+        </div>
+    </div>    
+</div>

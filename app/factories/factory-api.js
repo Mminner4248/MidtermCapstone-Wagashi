@@ -6,13 +6,13 @@ app.service("APIService", function($http, $q){
     this.filterSearch = function(itemCollection){
         console.log("itemCollection in filter", itemCollection.data); 
        
-        this.results = itemCollection.data.map(function(def) {
+        this.results = itemCollection.data.map(function(def, index) {
 
             return {
                 japanese: def.japanese[0].word,
                 furigana: def.japanese[0].reading,
                 pos: def.senses[0].parts_of_speech[0],
-                definitions: def.senses[0].english_definitions
+                definitions: def.senses[0].english_definitions,
             };
             
         });

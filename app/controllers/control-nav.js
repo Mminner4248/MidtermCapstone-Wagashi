@@ -12,7 +12,7 @@ app.controller('navCtrl', function($scope, $window, APIService, userFactory, $lo
         if($event.which === 13){
             let word = $event.target.value;
             console.log("word", word);
-            $scope.sendSearch(word);
+			$scope.sendSearch(word);
         }
     };
 
@@ -28,7 +28,7 @@ app.controller('navCtrl', function($scope, $window, APIService, userFactory, $lo
 		if(user) {
 			$scope.isLoggedIn = true;
 			console.log("CurrenUser logged in", user);
-			console.log("logged into firebase", $scope.isLoggedIn());
+			console.log("logged into firebase", $scope.isLoggedIn);
 			$scope.$apply();
 		}else{
 			$scope.isLoggedIn = false;
@@ -53,7 +53,6 @@ $scope.loginGoogle = () => {
 	userFactory.authWithProvider()
 	.then((result) => {
 		let user = result.user.uid;
-		// $location.path("#!/");
 		$scope.$apply();
 	}).catch((error) => {
 		console.log("Google Login if F'd");
