@@ -2,7 +2,7 @@
 
 console.log("Hello, app.js");
 
-const app = angular.module("WagashiApp", ["ngRoute"]);
+const app = angular.module("WagashiApp", ['ngRoute', 'ngAnimate']);
 
 let isAuth = (userFactory) => new Promise ((resolve, reject) => {
 	console.log("This is the userFactory", userFactory);

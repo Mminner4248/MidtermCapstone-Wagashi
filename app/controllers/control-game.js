@@ -4,80 +4,44 @@ app.controller('gameCtrl', function($window, $timeout, $compile, $scope, homeFac
     $scope.gameCards = [];
     $scope.gameArray = [];
 
- 
-
     let user = userFactory.getCurrentUser();
 
-//     const checkWin = function(){
-//         if($('.unmatched').length === 0){
-//             $window.alert("You won!");
-//         }
-//     };
+    const same = array => array.every(item => item.key === array[0].key);
+    const setAsMatched = array => {
+        Materialize.toast('A Match!', 3000, 'green');
+        array.forEach(game => {
+        $timeout (function() {
+            let thisGame = $scope.gameArray[$scope.gameArray.indexOf(game)];
+            thisGame.matched = true;
+            thisGame.selected = false;
+        }, 1000);
+        });  
+    };
 
-//    $scope.checkMatch = function(event){
-//        $(event.currentTarget).addClass("selected");
-//      if ($('.selected').length == 2) {
-//          console.log("Selected dataValue", $('.selected').first().attr("dataValue"));
-//          console.log("Selected dataValue", $('.selected').last().attr("dataValue"));
-//         if($('.selected').first().attr("dataValue") == $('.selected').last().attr("dataValue")) {
-//             $('.selected').each(function() {
-//                 $(this).animate({opacity: 0}).removeClass('unmatched');
-//             });
-//             $('.selected').each(function() {
-//                 $(this).removeClass('selected');
-//             });
-//             checkWin();
-//         } else {
-//             $timeout (function() {
-//                 console.log("outside!", $('.selected'));
-//                 $('.selected').each(function() {
-//                     console.log("inside!", $('.selected'));
-//                     $(this).find('.card-content').addClass('ng-hide');
-//                     $(this).removeClass('selected');
-//                 });
+    const unSelect = array => array.forEach(item => { 
+        $timeout (function() {
+        if(item.matched !== true) item.selected = false;
+        }, 1000);
 
-//                 // $('selected').each(function(){
-//                 //     console.log("inside!", $('.selected'));                    
-//                 //     $(this).removeClass('.selected');
-//                 // });
-//             }, 1000);
-//         }
-//      }
-//     };
+    });
+    
 
+    const checkMatch = function(selected){
 
-    const checkWin = function(){
-        if($('.unmatched').length === 0){
-            $window.alert("You won!");
+        if(same(selected)){
+            setAsMatched(selected);
+            return true;
+        }else {
+            unSelect($scope.gameArray);
+            return false;
         }
     };
 
-    const selectCard = function() {
-        console.log("this shit", this);
-        $('.gameCard').addClass('selected');
-        $('.gameCard').find('.card-content').removeClass('hidden');
-      };
-      
-    const checkMatch = function() {
-        if ($('.selected').first().attr("dataValue") == $('.selected').last().attr("dataValue"))
-         {
-          $('.gameCard.selected').remove();
-          checkWin();
-        } else {
-          $(this).setTimeout(() => {
-            $('.gameCard.selected').removeClass('selected');
-            $(this).find('.card-content').addClass('hidden');
-          }, 2000);
-        }
-      };
-           
-      $('.container').on('click', ".gameCard", () => {
-            console.log("clicked!");
-            selectCard();
-            checkMatch();
-        });
-
-    
+    $scope.selectCard = function(item){
+            item.selected = true;
+            let selected = $scope.gameArray.filter(game  => game.selected === true);
+            if(selected.length === 2) checkMatch(selected);
+        }; 
 
     const shuffle = function(){
         for(let i = 0; i < $scope.gameArray.length; i++) {
@@ -114,7 +78,6 @@ app.controller('gameCtrl', function($window, $timeout, $compile, $scope, homeFac
             splitArray();
             shuffle();
         });
-    }; 
-
-    // showAllGameCards();
+    };
+    
 });
