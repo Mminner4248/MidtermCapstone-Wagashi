@@ -4,7 +4,47 @@ app.controller('gameCtrl', function($window, $timeout, $compile, $scope, homeFac
     $scope.gameCards = [];
     $scope.gameArray = [];
 
+ 
+
     let user = userFactory.getCurrentUser();
+
+//     const checkWin = function(){
+//         if($('.unmatched').length === 0){
+//             $window.alert("You won!");
+//         }
+//     };
+
+//    $scope.checkMatch = function(event){
+//        $(event.currentTarget).addClass("selected");
+//      if ($('.selected').length == 2) {
+//          console.log("Selected dataValue", $('.selected').first().attr("dataValue"));
+//          console.log("Selected dataValue", $('.selected').last().attr("dataValue"));
+//         if($('.selected').first().attr("dataValue") == $('.selected').last().attr("dataValue")) {
+//             $('.selected').each(function() {
+//                 $(this).animate({opacity: 0}).removeClass('unmatched');
+//             });
+//             $('.selected').each(function() {
+//                 $(this).removeClass('selected');
+//             });
+//             checkWin();
+//         } else {
+//             $timeout (function() {
+//                 console.log("outside!", $('.selected'));
+//                 $('.selected').each(function() {
+//                     console.log("inside!", $('.selected'));
+//                     $(this).find('.card-content').addClass('ng-hide');
+//                     $(this).removeClass('selected');
+//                 });
+
+//                 // $('selected').each(function(){
+//                 //     console.log("inside!", $('.selected'));                    
+//                 //     $(this).removeClass('.selected');
+//                 // });
+//             }, 1000);
+//         }
+//      }
+//     };
+
 
     const checkWin = function(){
         if($('.unmatched').length === 0){
@@ -12,37 +52,32 @@ app.controller('gameCtrl', function($window, $timeout, $compile, $scope, homeFac
         }
     };
 
-   $scope.checkMatch = function(event){
-       $(event.currentTarget).addClass("selected");
-     if ($('.selected').length == 2) {
-         console.log("Selected dataValue", $('.selected').first().attr("dataValue"));
-         console.log("Selected dataValue", $('.selected').last().attr("dataValue"));
-        if($('.selected').first().attr("dataValue") == $('.selected').last().attr("dataValue")) {
-            $('.selected').each(function() {
-                $(this).animate({opacity: 0}).removeClass('unmatched');
-            });
-            $('.selected').each(function() {
-                $(this).removeClass('selected');
-            });
-            checkWin();
+    const selectCard = function() {
+        console.log("this shit", this);
+        $('.gameCard').addClass('selected');
+        $('.gameCard').find('.card-content').removeClass('hidden');
+      };
+      
+    const checkMatch = function() {
+        if ($('.selected').first().attr("dataValue") == $('.selected').last().attr("dataValue"))
+         {
+          $('.gameCard.selected').remove();
+          checkWin();
         } else {
-            $timeout (function() {
-                console.log("outside!", $('.selected'));
-                let gameElements = $('.selected');
-                gameElements.each(function() {
-                    console.log("inside!", gameElements);  
-                    // gameElements.addClass('ng-hide');
-                    gameElements.removeClass('.selected');
-                });
-
-                // $('selected').each(function(){
-                //     console.log("inside!", $('.selected'));                    
-                //     $(this).removeClass('.selected');
-                // });
-            }, 1000);
+          $(this).setTimeout(() => {
+            $('.gameCard.selected').removeClass('selected');
+            $(this).find('.card-content').addClass('hidden');
+          }, 2000);
         }
-     }
-    };
+      };
+           
+      $('.container').on('click', ".gameCard", () => {
+            console.log("clicked!");
+            selectCard();
+            checkMatch();
+        });
+
+    
 
     const shuffle = function(){
         for(let i = 0; i < $scope.gameArray.length; i++) {
@@ -56,12 +91,11 @@ app.controller('gameCtrl', function($window, $timeout, $compile, $scope, homeFac
 
     const splitArray = function(){
         $scope.gameArray = [].concat.apply([], $scope.gameCards);
-        console.log("new array, I make dis", $scope.gameArray); 
-        shuffle();       
+        console.log("new array, I make dis", $scope.gameArray);       
     };
 
 
-    const showAllGameCards = function(){
+    $scope.showAllGameCards = function(){
 		homeFactory.getAllUserCards(user)
 		.then((cards) => {
 			console.log("showGameCards from promise", cards);
@@ -77,9 +111,10 @@ app.controller('gameCtrl', function($window, $timeout, $compile, $scope, homeFac
                         }];
             });
             console.log("gameCards in Array", $scope.gameCards); 
-            splitArray();            
+            splitArray();
+            shuffle();
         });
     }; 
 
-    showAllGameCards();
+    // showAllGameCards();
 });

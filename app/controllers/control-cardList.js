@@ -6,6 +6,20 @@ app.controller('cardListCtrl', function($scope, APIService, homeFactory, userFac
 
     let user = userFactory.getCurrentUser();
 
+    $scope.isLoggedIn = false;
+
+    firebase.auth().onAuthStateChanged(function(user) {
+		if(user) {
+			$scope.isLoggedIn = true;
+			console.log("CurrenUser logged in", user);
+			console.log("logged into firebase", $scope.isLoggedIn);
+			$scope.$apply();
+		}else{
+			$scope.isLoggedIn = false;
+			console.log("This user is not logged", $scope.isLoggedIn);
+		}
+	});
+
     $scope.submitCard = function(card){
         console.log("user uid", user);
         let newObj = {

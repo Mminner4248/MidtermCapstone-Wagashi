@@ -1,6 +1,9 @@
 <div class="container">
-    <div ng-click="showDetails = ! showDetails; checkMatch($event)" class="gameCard unmatched"  dataValue={{item.key}} ng-repeat="item in gameArray" >
-        <div ng-show="showDetails">
+    <div class="poopypants">
+        <a ng-click="showAllGameCards();" class="waves-effect waves-light btn">Start!</a>
+    </div>
+    <div class="gameCard unmatched"  dataValue={{item.key}} ng-repeat="item in gameArray">
+        <div class="card-content hidden">
             <p>{{item.furigana}}</p>
             <h3>{{item.gameCard}}</h3>
         </div>

@@ -13,6 +13,7 @@ app.controller('navCtrl', function($scope, $window, APIService, userFactory, $lo
             let word = $event.target.value;
             console.log("word", word);
 			$scope.sendSearch(word);
+			$location.path( "/search" );
         }
     };
 

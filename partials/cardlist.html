@@ -1,6 +1,6 @@
 <div class="row">
 <div ng-repeat="stuff in APIService.results">
-<div class="col s12 m7">
+<div class="col s12 m8">
   <div class="card horizontal hoverable">
     <div class="card-image">
       <p>{{stuff.furigana}}</p>
@@ -16,7 +16,7 @@
         </ul>
       </div>
       <div class="card-action right-align">
-        <a ng-click="submitCard(stuff)" onclick="Materialize.toast('Vocab added!', 3000, 'green')" class="btn-floating btn-large waves-effect waves-light green"><i class="material-icons">add</i></a>
+        <a ng-show="isLoggedIn" ng-click="submitCard(stuff)" onclick="Materialize.toast('Vocab added!', 3000, 'green')" class="btn-floating btn-large waves-effect waves-light green"><i class="material-icons">add</i></a>
       </div>
     </div>
   </div>
