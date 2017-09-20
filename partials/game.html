@@ -1,8 +1,20 @@
 <div class="container">
-    <div class="poopypants">
-        <a ng-click="showAllGameCards();" class="waves-effect waves-light btn">Start!</a>
+    <div id="modal1" class="modal" modal open="openModal">
+        <div class="modal-content center-align">
+            <h4>You win!</h4>
+            <p>Your time: </p>
+            <img src="images/Mochi-icon.png">
+        </div>
     </div>
-    <div ng-repeat="item in gameArray" ng-click="selectCard(item)">
+    <div class="timer" ng-class="{critical:isCritical}">
+        {{timeLimit | date: 'm:ss'}} 	
+    </div>
+    <div class="startbtn">
+        <a ng-click="showAllGameCards(); startTimer()" class="waves-effect waves-light btn">Start!</a>
+        <a ng-click="showAllGameCards(); restartTimer()" class="waves-effect waves-light btn red">Restart!</a>
+    </div>
+
+    <div ng-repeat="item in gameArray" ng-click="isGuarding || selectCard(item)">
     <div ng-if="!item.matched" class="gameCard unmatched" dataValue={{item.key}} >
         <div ng-if="item.selected" class="card-content">
             <p>{{item.furigana}}</p>
@@ -11,3 +23,6 @@
     </div>  
 </div>  
 </div>
+
+
+

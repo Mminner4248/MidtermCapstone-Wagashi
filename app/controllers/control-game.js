@@ -7,27 +7,44 @@ app.controller('gameCtrl', function($window, $timeout, $compile, $scope, homeFac
     let user = userFactory.getCurrentUser();
 
     const same = array => array.every(item => item.key === array[0].key);
+
+    const checkMatched = array => array.every(item => item.matched === true);
+
+    const checkWin = function() {
+        if(checkMatched($scope.gameArray))
+        {
+            $scope.stopTimer();
+            $window.alert("You win! Your time was: {{$scope.timeLimit}}");            
+        }
+    };
+
     const setAsMatched = array => {
+        
         Materialize.toast('A Match!', 3000, 'green');
         array.forEach(game => {
         $timeout (function() {
             let thisGame = $scope.gameArray[$scope.gameArray.indexOf(game)];
             thisGame.matched = true;
             thisGame.selected = false;
+            $scope.isGuarding = false;
+            console.log("guard thats borked.", $scope.isGuarding);                            
+            checkWin();
         }, 1000);
-        });  
+        });
     };
 
     const unSelect = array => array.forEach(item => { 
         $timeout (function() {
         if(item.matched !== true) item.selected = false;
+        $scope.isGuarding = false;
+        console.log("guard", $scope.isGuarding);        
         }, 1000);
-
     });
     
 
-    const checkMatch = function(selected){
+    $scope.isGuarding = false;
 
+    const checkMatch = function(selected){
         if(same(selected)){
             setAsMatched(selected);
             return true;
@@ -40,7 +57,12 @@ app.controller('gameCtrl', function($window, $timeout, $compile, $scope, homeFac
     $scope.selectCard = function(item){
             item.selected = true;
             let selected = $scope.gameArray.filter(game  => game.selected === true);
-            if(selected.length === 2) checkMatch(selected);
+            console.log("selected", selected);
+            if(selected.length === 2){ 
+                checkMatch(selected);
+                $scope.isGuarding = true;
+                console.log("guard", $scope.isGuarding);
+            }
         }; 
 
     const shuffle = function(){
@@ -78,6 +100,31 @@ app.controller('gameCtrl', function($window, $timeout, $compile, $scope, homeFac
             splitArray();
             shuffle();
         });
+    };
+
+    $scope.stopTimer = function() {
+        $timeout.cancel(timer);
+      };
+
+    $scope.timeLimit = 60000;
+    $scope.isCritical = false;
+    
+    var timer = null;
+
+    $scope.startTimer = function(){
+		$scope.timeLimit -= 1000;
+		$scope.isCritical = $scope.timeLimit <= 10000 ? true : false;
+			
+		timer = $timeout($scope.startTimer, 1000);
+			if ($scope.timeLimit === 0) {
+                $scope.stopTimer();
+                $window.alert("You lost! Better luck next time!");            
+		}
+    };
+
+    $scope.restartTimer = function(){
+        $scope.timeLimit = 60000;
+        $scope.startTimer();
     };
     
 });
