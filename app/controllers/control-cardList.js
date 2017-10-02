@@ -1,5 +1,5 @@
 "use strict";
-
+//This controller grabs the APIService array and sets up the function that organizes the object to be saved and pushed up to Firebase.
 app.controller('cardListCtrl', function($scope, APIService, homeFactory, userFactory){
     $scope.APIService = APIService;
     console.log("Scope results", $scope.results);

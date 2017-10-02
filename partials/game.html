@@ -1,11 +1,6 @@
+<!--This template contains the card game that is accessed when the user clicks on the game button.-->
 <div class="container">
-    <div id="modal1" class="modal" modal open="openModal">
-        <div class="modal-content center-align">
-            <h4>You win!</h4>
-            <p>Your time: </p>
-            <img src="images/Mochi-icon.png">
-        </div>
-    </div>
+
     <div class="timer" ng-class="{critical:isCritical}">
         {{timeLimit | date: 'm:ss'}} 	
     </div>

@@ -1,5 +1,5 @@
 "use strict";
-
+//This controller controls the user authentication on the homepage, and grabs the user firebase factory data.
 app.controller('homeViewCtrl', function($scope, homeFactory, userFactory){
     $scope.userCards = [];
 	let user = userFactory.getCurrentUser();

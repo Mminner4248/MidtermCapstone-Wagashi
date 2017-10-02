@@ -1,11 +1,11 @@
 "use strict";
-
+//Pulls in the value from the navbar controller for the API call. I used a service so that I could target that instance of the array, so the cardList controller would have a fresh array each time a new word was searched.
 app.service("APIService", function($http, $q){
     this.results = [];
 
     this.filterSearch = function(itemCollection){
         console.log("itemCollection in filter", itemCollection.data); 
-       
+       //filtered API results into manageable data structure.
         this.results = itemCollection.data.map(function(def, index) {
 
             return {

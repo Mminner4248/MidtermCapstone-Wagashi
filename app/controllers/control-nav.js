@@ -4,6 +4,8 @@
 
 app.controller('navCtrl', function($scope, $window, APIService, userFactory, $location){
 
+	//On enter, the value in the search bar is sent to the API service.
+
     $scope.sendSearch = function(word){
         APIService.getAllDefs(word);
     };
@@ -17,8 +19,7 @@ app.controller('navCtrl', function($scope, $window, APIService, userFactory, $lo
         }
     };
 
-    //provides the functionality for the navbar partial. Checks if the user is logged in with a true or false. This navbar partial uses this to provide what to show. 
-
+	//checks if the user it logged in, if so then the buttons changed to the logged in buttons in the template.
 	$scope.isLoggedIn = false;
 
 	$scope.logout = () => {

@@ -1,7 +1,7 @@
 "use strict";
 
 console.log("Hello, app.js");
-
+//The app module that contains ngRoute, the authentication for Firebase, and the authentication template it pulls from FBCreds.
 const app = angular.module("WagashiApp", ['ngRoute', 'ngAnimate']);
 
 let isAuth = (userFactory) => new Promise ((resolve, reject) => {

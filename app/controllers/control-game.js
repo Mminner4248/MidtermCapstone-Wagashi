@@ -5,19 +5,20 @@ app.controller('gameCtrl', function($window, $timeout, $compile, $scope, homeFac
     $scope.gameArray = [];
 
     let user = userFactory.getCurrentUser();
-
+//compares every object key, if the two objects with selected match, then they have their matched value changes to true.
     const same = array => array.every(item => item.key === array[0].key);
 
     const checkMatched = array => array.every(item => item.matched === true);
 
+//if all matched is true, then stop game and alert.
     const checkWin = function() {
         if(checkMatched($scope.gameArray))
         {
             $scope.stopTimer();
-            $window.alert("You win! Your time was: {{$scope.timeLimit}}");            
+            $window.alert("You win!");            
         }
     };
-
+//sets matched to true, which removes cards and checks to see if all matched is true, which finishes the game.
     const setAsMatched = array => {
         
         Materialize.toast('A Match!', 3000, 'green');
@@ -32,7 +33,7 @@ app.controller('gameCtrl', function($window, $timeout, $compile, $scope, homeFac
         }, 1000);
         });
     };
-
+//takes the array, and sets selected to false, removes the gaurd so users can click on new two cards.
     const unSelect = array => array.forEach(item => { 
         $timeout (function() {
         if(item.matched !== true) item.selected = false;
@@ -43,7 +44,7 @@ app.controller('gameCtrl', function($window, $timeout, $compile, $scope, homeFac
     
 
     $scope.isGuarding = false;
-
+//if key is the same, setAsMatched, if not set Selected to false.
     const checkMatch = function(selected){
         if(same(selected)){
             setAsMatched(selected);
@@ -53,7 +54,7 @@ app.controller('gameCtrl', function($window, $timeout, $compile, $scope, homeFac
             return false;
         }
     };
-
+//On click, it runs this function which changes values in the object, and then checks if there is a match.
     $scope.selectCard = function(item){
             item.selected = true;
             let selected = $scope.gameArray.filter(game  => game.selected === true);
@@ -64,7 +65,7 @@ app.controller('gameCtrl', function($window, $timeout, $compile, $scope, homeFac
                 console.log("guard", $scope.isGuarding);
             }
         }; 
-
+//shuffles the now flat array so that it generates different card order each time the user plays.
     const shuffle = function(){
         for(let i = 0; i < $scope.gameArray.length; i++) {
            let random = Math.round(Math.random() * i);
@@ -74,13 +75,13 @@ app.controller('gameCtrl', function($window, $timeout, $compile, $scope, homeFac
         }
         console.log("shuffled Array", $scope.gameArray);
     };
-
+//takes the array or array of objects and splits it into a flat array.
     const splitArray = function(){
         $scope.gameArray = [].concat.apply([], $scope.gameCards);
         console.log("new array, I make dis", $scope.gameArray);       
     };
 
-
+//This call takes the objects from Firebase based on uid and maps them into two separate cards.
     $scope.showAllGameCards = function(){
 		homeFactory.getAllUserCards(user)
 		.then((cards) => {
@@ -102,6 +103,7 @@ app.controller('gameCtrl', function($window, $timeout, $compile, $scope, homeFac
         });
     };
 
+//The timer is started on click, which gives the user one minute to complete the game, or they lose. 
     $scope.stopTimer = function() {
         $timeout.cancel(timer);
       };
